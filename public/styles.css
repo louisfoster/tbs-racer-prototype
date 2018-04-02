@@ -1,0 +1,16 @@
+.container {
+
+    font-family: monospace;
+    font-size: 6px;
+    line-height: 0.8;
+}
+
+.container span {
+
+    color: limegreen;
+}
+
+.collision .container span {
+
+    color: red;
+}
