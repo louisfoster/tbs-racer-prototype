@@ -14,3 +14,20 @@
 
     color: red;
 }
+
+.buttons {
+
+    display: flex;
+    width: 90px;
+    flex-direction: column;
+    margin-top: 24px;
+}
+
+.buttonRow {
+    flex: 1;
+    display: flex;
+}
+
+.buttonRow button {
+    flex: 1;
+}
