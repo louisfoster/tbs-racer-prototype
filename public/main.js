@@ -8,17 +8,17 @@ function detectPlayerCollision(map, object) {
     for (var i = 0; i < object.size; i++) {
 
         // Row is the number of columns...
-        // Times by the (object's y position (-1 due to 0'ing of array)...
-        // Plus the size or length of the object)
-        var row = (object.position[1] - 1 + i) * map.dimensions[0]
+        // multiplied by the (object's y position...
+        // plus the size or length of the object)
+        var row = (object.position[1] + i) * map.dimensions[0]
         
         // Get column
         for (var j = 0; j < object.size; j++) {
 
             // Column is the row "value"..
-            // plus (object's x position (-1 due to 0'ing of array)...
+            // plus (object's x position...
             // plus the size or height of the object)
-            var column = row + (object.position[0] - 1 + j)
+            var column = row + (object.position[0] + j)
 
             // Check if collision
             if (map.data[column] === 1) {
@@ -57,8 +57,10 @@ function buildMap(collide) {
     var player = [100, 190]
     if (collide && collide === true) {
 
-        var player = [101, 182]
+        player = [101, 181]
+        // player = [0, 0]
     }
+    var playerSize = 2
 
     var text = ""
 
@@ -68,15 +70,15 @@ function buildMap(collide) {
 
             // Player position
             var playerMark = false
-            if ((j === player[0] || j + 1 === player[0]) && 
-                (i === player[1] || i + 1 === player[1])) {
+            if ((j === player[0] || j === player[0] + (playerSize - 1)) && 
+                (i === player[1] || i === player[1] + (playerSize - 1))) {
                 
                 text += "<span>█</span>"
                 playerMark = true
             }
 
             // Drawing the race course
-            // d square = 
+            // d (distance) square = 
             // (point x minus center point x) square
             // plus
             // (point y minus center point y) square
@@ -84,6 +86,7 @@ function buildMap(collide) {
 
             var d = square(j - mid) + square(i - mid)
 
+            // Boundary check
             if (i <= 3 || j <= 3 || i > ROWS - 5 || j > COLUMNS - 5) {
 
                 if (playerMark !== true)
@@ -108,7 +111,7 @@ function buildMap(collide) {
     // Detect if there was a collision
     var collision = detectPlayerCollision(
         {data: data, dimensions: [COLUMNS, ROWS]}, 
-        {position: player, size: 2})
+        {position: player, size: playerSize})
 
     document.body.className = collision === true ? "collision" : ""
 
