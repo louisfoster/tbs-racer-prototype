@@ -1,5 +1,6 @@
 import { BaseMap } from "../Map";
 import { square } from "../../Utils/MathUtil"
+import IPoint from "../Point";
 
 interface ITestMap {
 
@@ -17,25 +18,25 @@ export default class TestMap extends BaseMap implements ITestMap {
         super()
 
         this.boundaryWidth = boundaryWidth
-        this.circleRadius
+        this.circleRadius = square(this.size * 0.4)
 
         this.buildMapData()
     }
 
     buildMapData() {
 
-        const mid = Math.round(this.rows * 0.5)
+        const mid = Math.round(this.size * 0.5)
 
-        for (var i = 0; i < this.rows; i++) {
+        for (var i = 0; i < this.size; i++) {
 
-            for (var j = 0; j < this.columns; j++) {
+            for (var j = 0; j < this.size; j++) {
 
                 const distance = square(j - mid) + square(i - mid)
 
                 if (i < this.boundaryWidth 
                     || j < this.boundaryWidth 
-                    || i >= this.rows - this.boundaryWidth 
-                    || j >= this.columns - this.boundaryWidth) {
+                    || i >= this.size - this.boundaryWidth 
+                    || j >= this.size - this.boundaryWidth) {
     
                     this.data.push(1)
                 }
@@ -44,6 +45,14 @@ export default class TestMap extends BaseMap implements ITestMap {
                     this.data.push((distance > this.circleRadius) ? 0 : 1)
                 }
             }
+        }
+    }
+
+    getStartPoint(): IPoint {
+
+        return {
+            x: Math.round(this.size / 2),
+            y: this.size - (this.boundaryWidth * 2)
         }
     }
 }

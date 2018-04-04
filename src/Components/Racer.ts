@@ -2,19 +2,8 @@ import IVector from './Vector'
 import IPoint from './Point'
 import IDrawable from './Drawable'
 import EventSystem, { EventType } from "../Systems/Events"
+import { InputType } from '../Systems/InputIntent'
 
-export enum RacerMove {
-
-    UpLeft = 0,
-    Up,
-    UpRight,
-    Left,
-    Principal,
-    Right,
-    DownLeft,
-    Down,
-    DownRight
-}
 
 export default interface IRacer extends IDrawable {
 
@@ -28,7 +17,7 @@ export default interface IRacer extends IDrawable {
     previousPositions: Array<IPoint>
     previousVectors: Array<IVector>
 
-    updatePositionAndVectorData(move: RacerMove)
+    updatePositionAndVectorData(move: InputType)
 
     setNextPositions()
 }

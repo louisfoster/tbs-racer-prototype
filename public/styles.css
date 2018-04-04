@@ -5,14 +5,29 @@
     line-height: 0.8;
 }
 
-.container span {
+.object.object--state-normal {
 
     color: limegreen;
 }
 
-.collision .container span {
+.object.object--state-collided {
 
     color: red;
+}
+
+.nextMove.nextMove--move-principal {
+
+    color: blue;
+}
+
+.nextMove.nextMove--move-neighbour {
+
+    color: yellow;
+}
+
+.previousPoint {
+
+    color: grey;
 }
 
 .buttons {

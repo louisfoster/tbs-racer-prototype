@@ -1,11 +1,10 @@
-import IDrawable from "./Drawable"
+import IDrawable, { DrawableType } from "./Drawable"
 import EventSystem, { EventType } from "../Systems/Events"
 
 export interface IMap extends IDrawable {
 
-    rows: number
-    columns: number
     data: Array<number>
+    size: number
 
     mapData(): Array<number>
     buildMapData()
@@ -14,19 +13,21 @@ export interface IMap extends IDrawable {
 export class BaseMap implements IMap {
 
     // Properties
-    rows: number
-    columns: number
     data: Array<number>
+    size: number
     id: number
     draw: boolean
+    type: DrawableType
+    collided: boolean
+    collisionWith: number
 
-    constructor(rows: number = 200, columns: number = rows) {
-
-        this.rows = rows
-        this.columns = columns
+    constructor(size: number = 200) {
 
         this.data = []
+        this.size = size
         this.draw = true
+        this.type = DrawableType.Data
+        this.collided = false
     }
 
     buildMapData() {
@@ -41,5 +42,12 @@ export class BaseMap implements IMap {
     updated() {
 
         EventSystem.push(EventType.DrawableUpdated)
+    }
+
+    collision(id: number) {
+
+        this.collided = true
+        this.collisionWith = id
+        this.updated()
     }
 }

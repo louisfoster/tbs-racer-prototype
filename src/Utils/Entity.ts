@@ -6,7 +6,7 @@ interface IEntity {
     object: any
 }
 
-class Entities {
+export default class Entities {
 
     list: Array<IEntity>
     dict: {IEntity?}

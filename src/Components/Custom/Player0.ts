@@ -1,9 +1,11 @@
-import IRacer, { RacerMove } from "../Racer"
+import IRacer from "../Racer"
 import IPoint from "../Point"
 import IVector from "../Vector"
 import EventSystem, { EventType } from "../../Systems/Events"
+import { DrawableType } from "../Drawable";
+import { IInteractive, InputType } from "../../Systems/InputIntent";
 
-class Player0 implements IRacer {
+export default class Player0 implements IRacer, IInteractive {
 
     position: IPoint
     principalVector: IVector
@@ -15,10 +17,30 @@ class Player0 implements IRacer {
     previousPositions: Array<IPoint>
     previousVectors: Array<IVector>
     draw: boolean
+    type: DrawableType.PositionAndSize
+    collided: boolean
+    collisionWith: number
+
+    inputTypes: Array<InputType>
+    interactive: boolean
 
     constructor(start: IPoint, size: number = 2) {
 
+        this.interactive = true
+        this.inputTypes = [
+            InputType.UpLeft,
+            InputType.Up,
+            InputType.UpRight,
+            InputType.Left,
+            InputType.Principal,
+            InputType.Right,
+            InputType.DownLeft,
+            InputType.Down,
+            InputType.DownRight
+        ]
+
         this.draw = true
+        this.type = DrawableType.PositionAndSize
 
         this.start = start
         this.position = start
@@ -36,22 +58,30 @@ class Player0 implements IRacer {
             {x: 0, y: 1},
             {x: 1, y: 1},
         ]
+        
+        this.previousPositions = []
+        this.previousVectors = []
 
         this.setNextPositions()
     }
 
-    updatePositionAndVectorData(move: RacerMove) {
+    updatePositionAndVectorData(move: InputType) {
 
         this.previousPositions.push(this.position)
         this.previousVectors.push(this.principalVector)
 
-        this.position = (move === RacerMove.Principal) ? this.nextPrincipalPoint : 
-                                                         this.nextNeighbourPoints[move]
-        
-        if (move !== RacerMove.Principal) {
+        if (move === InputType.Principal) {
+            
+            this.position = this.nextPrincipalPoint
+        }
+        else {
 
-            this.principalVector.x += this.neighbourVectors[move].x
-            this.principalVector.y += this.neighbourVectors[move].y
+            let index = (move > 4) ? move - 1 : move
+
+            this.position = this.nextNeighbourPoints[index]
+
+            this.principalVector.x += this.neighbourVectors[index].x
+            this.principalVector.y += this.neighbourVectors[index].y
         }
 
         this.setNextPositions()
@@ -104,6 +134,18 @@ class Player0 implements IRacer {
     updated() {
 
         EventSystem.push(EventType.DrawableUpdated)
+    }
+
+    collision(id: number) {
+
+        this.collided = true
+        this.collisionWith = id
+        this.updated()
+    }
+
+    onInput(input: InputType) {
+
+        this.updatePositionAndVectorData(input)
     }
 }
 
