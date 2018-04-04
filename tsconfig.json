@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "amd",
+        "sourceMap": true,
+        "sourceRoot": "src/",
+        "outFile": "public/App.js"
+    },
+    "exclude": [
+      "node_modules",
+      ".npm"
+    ]
+}
