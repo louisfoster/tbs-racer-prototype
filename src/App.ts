@@ -6,13 +6,15 @@ import IPoint from "./Components/Point";
 import Entities from "./Utils/Entity";
 import InputIntent from "./Systems/InputIntent";
 import ButtonGrid from "./Interface/ButtonGrid";
+import ThreeDViewer from "./Graphics/ThreeD/ThreeDViewer";
 
 interface AppInterface {
 
     player: Player0
     map: TestMap
     collisionSystem: Collisions
-    viewer: DOMViewer
+    domViewer: DOMViewer
+    threeDViewer: ThreeDViewer
     entities: Entities
     inputIntent: InputIntent
     buttonInterface: ButtonGrid
@@ -25,7 +27,8 @@ class App implements AppInterface {
     player: Player0
     map: TestMap
     collisionSystem: Collisions
-    viewer: DOMViewer
+    domViewer: DOMViewer
+    threeDViewer: ThreeDViewer
     entities: Entities
     inputIntent: InputIntent
     buttonInterface: ButtonGrid
@@ -34,7 +37,7 @@ class App implements AppInterface {
 
     constructor() {
 
-        this.map = new TestMap()
+        this.map = new TestMap(10, 1)
 
         this.start = this.map.getStartPoint()
 
@@ -46,7 +49,8 @@ class App implements AppInterface {
 
         this.collisionSystem = new Collisions(this.entities)
 
-        this.viewer = new DOMViewer(this.map.size, this.entities)
+        this.domViewer = new DOMViewer(this.map.size, this.entities)
+        this.threeDViewer = new ThreeDViewer(this.map.size, this.entities)
 
         this.inputIntent = new InputIntent(this.entities)
         this.buttonInterface = new ButtonGrid()

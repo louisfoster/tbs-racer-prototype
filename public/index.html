@@ -9,6 +9,7 @@
     <link href="styles.css" rel="stylesheet"/>
 </head>
 <body>
+    <div id="threeDContainer" class="threeDContainer"></div>
     <div id="container" class="container"></div>
     <div class="buttons">
         <div class="buttonRow">
@@ -30,7 +31,11 @@
     <!-- <script src="main.js"></script> -->
     <script data-main="App" src="../node_modules/requirejs/require.js"></script>
     <script>
-        require.config({ paths: { "three": "./node_modules/three/build/three" } });
+        require.config({
+            paths: { 
+                "three": "../node_modules/three/build/three"
+            }
+        });
     </script>
 </body>
 </html>

@@ -1,0 +1,1 @@
+// Harness Class for nodes tracking nodes (e.g. camera tracking avatar)

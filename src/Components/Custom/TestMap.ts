@@ -13,9 +13,9 @@ export default class TestMap extends BaseMap implements ITestMap {
     boundaryWidth: number
     circleRadius: number
 
-    constructor(boundaryWidth: number = 4) {
+    constructor(size: number = 200, boundaryWidth: number = 4) {
         
-        super()
+        super(size)
 
         this.boundaryWidth = boundaryWidth
         this.circleRadius = square(this.size * 0.4)
